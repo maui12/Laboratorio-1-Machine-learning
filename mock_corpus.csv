@@ -1,0 +1,11 @@
+id,fuente,texto,fecha,url,autor,consulta,texto_limpio
+1,X,Probando la nueva API para el proyecto de Data Science. Deséenme suerte 💻📊,2026-04-14T09:15:00Z,https://x.com/dev1/status/1,@coder_py,Data Science,probando nueva api proyecto data science deseenme suerte
+2,RSS,El observatorio Vera C. Rubin anuncia avances en el uso de Machine Learning para el análisis de datos.,2026-04-14T10:00:00Z,https://latercera.com/noticia/2,La Tercera,Machine Learning,observatorio vera c rubin anuncia avances uso machine learning analisis datos
+3,X,¿Alguien más peleando con K-Means y la reducción con PCA? 😭 Necesito café.,2026-04-13T22:30:00Z,https://x.com/student/status/3,@data_student,K-Means,alguien mas peleando k-means reduccion pca necesito cafe
+4,RSS,Radiografía al uso de bases de datos NoSQL en aplicaciones web modernas en Chile.,2026-04-13T14:20:00Z,https://cooperativa.cl/tec/4,Cooperativa,NoSQL,radiografia uso bases datos nosql aplicaciones web modernas chile
+5,X,Hoy el clima en La Serena está perfecto para quedarse programando todo el día. ☁️,2026-04-14T08:05:00Z,https://x.com/local_dev/status/5,@local_dev,La Serena,hoy clima serena perfecto quedarse programando dia
+6,RSS,Expertos en ciberseguridad advierten sobre nuevas técnicas de ataque en redes sociales.,2026-04-12T11:45:00Z,https://latercera.com/noticia/6,La Tercera,ciberseguridad,expertos ciberseguridad advierten nuevas tecnicas ataque redes sociales
+7,X,Logré conectar MongoDB con Python sin que explote todo. Un gran paso.,2026-04-13T19:10:00Z,https://x.com/dev2/status/7,@backend_ninja,MongoDB,logre conectar mongodb python explote gran paso
+8,X,Entrenando el modelo TF-IDF con un corpus de noticias chilenas. Resultados preliminares interesantes.,2026-04-14T11:00:00Z,https://x.com/ml_guy/status/8,@ml_guy,TF-IDF,entrenando modelo tf-idf corpus noticias chilenas resultados preliminares interesantes
+9,RSS,Estudio revela que el uso de Python y Pandas lidera las preferencias de los desarrolladores.,2026-04-13T09:30:00Z,https://cooperativa.cl/tec/9,Cooperativa,Python Pandas,estudio revela uso python pandas lidera preferencias desarrolladores
+10,X,Listos los gráficos de dispersión de los clústers. Se ven hermosos los colores 📈,2026-04-14T12:20:00Z,https://x.com/viz_master/status/10,@viz_master,Clustering,listos graficos dispersion clusters ven hermosos colores
