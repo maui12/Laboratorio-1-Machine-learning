@@ -1,8 +1,7 @@
 import pandas as pd
 import requests
 from token_x import X_BEARER_TOKEN
-
-X_MAX_RESULTS = 100
+from configuracion import X_QUERY,X_MAX_RESULTS
 
 
 def buscar_posts_x(query, bearer_token, max_results=10):
@@ -70,8 +69,9 @@ def buscar_posts_x(query, bearer_token, max_results=10):
     return pd.DataFrame(registros)
 
 
+#ejemplo
 df_x = buscar_posts_x(
-    query="hola",
+    query=X_QUERY,
     bearer_token=X_BEARER_TOKEN,
     max_results=X_MAX_RESULTS
 )
@@ -81,3 +81,5 @@ df_x.head()
 
 
 df_x.head(100)
+
+#df_x.to_parquet("df_x.parquet", index=False)
