@@ -7,5 +7,5 @@ COOPERATIVA_RSS_URL = "https://www.cooperativa.cl/noticias/site/tax/port/all/rss
 COOPERATIVA_MAX_ITEMS = 30
 
 #Salidas
-PARQUET_OUTPUT_NAME = "corpus_consolidado_laboratorio_01.parquet"
-PICKLE_OUTPUT_NAME = "corpus_consolidado_laboratorio_01.pkl"
+PARQUET_OUTPUT_NAME = "corpus_consolidado.parquet"
+PICKLE_OUTPUT_NAME = "corpus_consolidado.pkl"
