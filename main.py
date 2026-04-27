@@ -108,7 +108,7 @@ def main():
     else:
         print("Aviso: No se ingresó URI. Se omite el guardado en MongoDB.") #[cite: 1]   
     
-        print("\n=== PIPELINE DE EXTRACCIÓN COMPLETADO CON ÉXITO ===")
+        print("\n=== PIPELINE COMPLETADO CON ÉXITO ===")
         print(df_corpus.head())
 
 if __name__ == "__main__":

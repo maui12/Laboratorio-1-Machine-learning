@@ -1,6 +1,6 @@
 # Laboratorio 1 Machine learning
 
-1 Crear entorno: conda env create -f environment.yaml
+1 Crear entorno: conda env create -f environment.yml
 
 2 Activar entorno: conda activate lab-1-m-l
 
