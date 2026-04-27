@@ -43,7 +43,7 @@ def ejecutar_analisis(df):
     plt.ylabel("Componente Principal 2")
     plt.legend(bbox_to_anchor=(1.05, 1), loc='upper left')
     plt.tight_layout()
-    plt.savefig("images/velocidades_histograma.png")
+    plt.savefig("images/pca_clusters.png")
     plt.close()
     
     # 2. Grafico de Barras (Frecuencias TF-IDF)
