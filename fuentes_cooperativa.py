@@ -48,9 +48,3 @@ def extraer_rss_cooperativa():
         return pd.DataFrame(columns=["id", "fuente", "texto", "fecha", "url", "autor", "consulta"])
         
     return df_rss
-
-# Bloque de prueba: Solo se ejecuta si corres este archivo directamente
-if __name__ == "__main__":
-    df_prueba = extraer_rss_cooperativa()
-    print(f"Cantidad de noticias recuperadas: {len(df_prueba)}")
-    print(df_prueba['texto'])
