@@ -4,10 +4,14 @@ import os
 
 import fuentes_x
 import fuentes_cooperativa
+import fuentes_csv   
+import preprocesamiento
+import analisis
 import consolidacion_dfs
 import persistencia_binaria
 import persistencia_nosql
 
+from token_x import X_BEARER_TOKEN
 from configuracion import (
     X_QUERY,X_MAX_RESULTS,CSV_FILE_PATH,
     MONGO_DB_NAME,MONGO_COLLECTION_NAME
@@ -71,17 +75,17 @@ def main():
     print("\n[2/7] Extrayendo datos de RSS Cooperativa...")
     df_rss = fuentes_cooperativa.extraer_rss_cooperativa()
     
-    #por si ponemos tiktok
-    df_csv = None 
+    print(f"\n[3/7] Cargando fuente opcional CSV ({CSV_FILE_PATH})...")
+    df_csv = fuentes_csv.cargar_datos_csv(CSV_FILE_PATH)
     
-    print("\n[3/4] Consolidando el corpus de datos...")
+    print("\n[4/7] Consolidando el corpus de datos...")
     df_corpus = consolidacion_dfs.generar_consolidado(df_x, df_rss, df_csv)
     
     if df_corpus.empty:
         print("Error crítico: El corpus está vacío. Se aborta la ejecución.")
         return
         
-    print("\n[4/4] Guardando respaldos binarios... (Parquet)")
+    print("\n[5/7] Guardando respaldos binarios... (Parquet)")
     persistencia_binaria.guardar_corpus(df_corpus)
 
     print("\n[6/7] Ejecutando limpieza y análisis (TF-IDF, Clusters, PCA)...")

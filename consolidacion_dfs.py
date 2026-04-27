@@ -1,6 +1,6 @@
 import pandas as pd
 
-def generar_consolidado(df_x, df_rss, df_csv=None):
+def generar_consolidado(df_x, df_rss, df_salida, df_csv=None):
     """
     Une los DataFrames parciales en una sola estructura homogénea.
     """
@@ -14,6 +14,9 @@ def generar_consolidado(df_x, df_rss, df_csv=None):
         
     if df_csv is not None and not df_csv.empty:
         dataframes_a_unir.append(df_csv)
+
+    if df_salida is not None and not df_salida.empty:
+        dataframes_a_unir.append(df_salida)
 
     # 2. Unión vertical
     if not dataframes_a_unir:
