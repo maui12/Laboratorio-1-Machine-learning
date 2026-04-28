@@ -23,7 +23,7 @@ def ejecutar_analisis(df):
     pca_res = pca.fit_transform(tfidf_matrix.toarray())
     df["pca_1"], df["pca_2"] = pca_res[:, 0], pca_res[:, 1]
     
-    # t-SNE (No Lineal) - EXIGENCIA DEL PROFE
+    # t-SNE (No Lineal)
     tsne = TSNE(n_components=2, perplexity=min(30, len(df)-1), random_state=42)
     tsne_res = tsne.fit_transform(tfidf_matrix.toarray())
     df["tsne_1"], df["tsne_2"] = tsne_res[:, 0], tsne_res[:, 1]
@@ -44,7 +44,7 @@ def ejecutar_analisis(df):
     plt.savefig("images/tsne_clusters.png")
     plt.close()
     
-    # Nubes de palabras - EXIGENCIA DEL PROFE
+    # Nubes de palabras 
     vocabulario = vectorizer.get_feature_names_out()
     for i in range(n_clusters):
         textos_cluster = " ".join(df[df["cluster"] == i]["texto_limpio"])
