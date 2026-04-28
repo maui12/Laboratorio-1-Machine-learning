@@ -6,68 +6,58 @@ import seaborn as sns
 from sklearn.feature_extraction.text import TfidfVectorizer
 from sklearn.cluster import KMeans
 from sklearn.decomposition import PCA
+from sklearn.manifold import TSNE
+from wordcloud import WordCloud
 
 def ejecutar_analisis(df):
     vectorizer = TfidfVectorizer(max_features=1000)
     tfidf_matrix = vectorizer.fit_transform(df["texto_limpio"])
-    
-    n_clusters = 4 if len(df) >= 4 else max(1, len(df))
+    n_clusters = 4
     
     # Clustering
     kmeans = KMeans(n_clusters=n_clusters, random_state=42, n_init=10)
     df["cluster"] = kmeans.fit_predict(tfidf_matrix)
     
-    # PCA
-    if tfidf_matrix.shape[0] >= 2 and tfidf_matrix.shape[1] >= 2:
-        pca = PCA(n_components=2, random_state=42)
-        pca_result = pca.fit_transform(tfidf_matrix.toarray())
-        df["pca_1"] = pca_result[:, 0]
-        df["pca_2"] = pca_result[:, 1]
-    else:
-        df["pca_1"] = 0
-        df["pca_2"] = 0
+    # PCA (Lineal)
+    pca = PCA(n_components=2, random_state=42)
+    pca_res = pca.fit_transform(tfidf_matrix.toarray())
+    df["pca_1"], df["pca_2"] = pca_res[:, 0], pca_res[:, 1]
+    
+    # t-SNE (No Lineal) - EXIGENCIA DEL PROFE
+    tsne = TSNE(n_components=2, perplexity=min(30, len(df)-1), random_state=42)
+    tsne_res = tsne.fit_transform(tfidf_matrix.toarray())
+    df["tsne_1"], df["tsne_2"] = tsne_res[:, 0], tsne_res[:, 1]
+    
+    if not os.path.exists("images"): os.makedirs("images")
         
-    # Graficos para Latex
-    if not os.path.exists("images"):
-        os.makedirs("images")
-        
-    # 1. Grafico Scatter (PCA)
-    plt.figure(figsize=(10, 8))
-    style_param = "fuente" if df["fuente"].nunique() > 1 else None
-    sns.scatterplot(
-        x="pca_1", y="pca_2", hue="cluster", style=style_param, 
-        data=df, palette="viridis", s=100
-    )
-    plt.title("Agrupamiento de Textos (K-Means + PCA)")
-    plt.xlabel("Componente Principal 1")
-    plt.ylabel("Componente Principal 2")
-    plt.legend(bbox_to_anchor=(1.05, 1), loc='upper left')
-    plt.tight_layout()
+    # Grafico PCA
+    plt.figure(figsize=(8, 6))
+    sns.scatterplot(x="pca_1", y="pca_2", hue="cluster", data=df, palette="viridis")
+    plt.title("Visualizacion Lineal (PCA)")
     plt.savefig("images/pca_clusters.png")
     plt.close()
-    
-    # 2. Grafico de Barras (Frecuencias TF-IDF)
-    pesos_totales = np.asarray(tfidf_matrix.sum(axis=0)).ravel()
-    vocabulario = vectorizer.get_feature_names_out()
-    df_frec = pd.DataFrame({'Palabra': vocabulario, 'Peso': pesos_totales})
-    df_frec = df_frec.sort_values(by='Peso', ascending=False).head(10)
-    
-    plt.figure(figsize=(10, 6))
-    sns.barplot(x='Peso', y='Palabra', data=df_frec, palette='magma')
-    plt.title("Top 10 Palabras Mas Relevantes del Corpus")
-    plt.xlabel("Peso TF-IDF Acumulado")
-    plt.ylabel("Palabra")
-    plt.tight_layout()
-    plt.savefig("images/grafico_frecuencias.png")
+
+    # Grafico t-SNE (No Lineal)
+    plt.figure(figsize=(8, 6))
+    sns.scatterplot(x="tsne_1", y="tsne_2", hue="cluster", data=df, palette="magma")
+    plt.title("Visualizacion No Lineal (t-SNE)")
+    plt.savefig("images/tsne_clusters.png")
     plt.close()
     
-    # Datos para tabla de Latex
+    # Nubes de palabras - EXIGENCIA DEL PROFE
+    vocabulario = vectorizer.get_feature_names_out()
+    for i in range(n_clusters):
+        textos_cluster = " ".join(df[df["cluster"] == i]["texto_limpio"])
+        if textos_cluster.strip():
+            wc = WordCloud(width=800, height=400, background_color="white").generate(textos_cluster)
+            wc.to_file(f"images/nube_cluster_{i}.png")
+            
+    # Datos para tabla Latex
     print("\n--- COPIAR PARA LA TABLA DE LATEX ---")
     centroides = kmeans.cluster_centers_
     for i in range(n_clusters):
         indices_top = centroides[i].argsort()[-5:][::-1]
         palabras = [vocabulario[ind] for ind in indices_top]
         print(f"{i} & {', '.join(palabras)} \\\\ \\hline")
-    print("-------------------------------------\n")
     
     return df
