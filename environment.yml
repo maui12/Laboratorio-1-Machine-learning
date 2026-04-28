@@ -9,4 +9,6 @@ dependencies:
   - pandas
   - pyarrow
   - requests
+  - matplotlib
+  - seaborn
 prefix: E:\Computador\Programas\anaconda\envs\lab-1-m-l

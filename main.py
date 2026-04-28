@@ -41,6 +41,17 @@ def main():
             if not df_x.empty:
                 df_x.to_parquet("respaldo_x_crudo.parquet", index=False)
                 print("-> Respaldo local ('respaldo_x_crudo.parquet') actualizado.")
+
+                df_x = pd.read_parquet("respaldo_x_crudo.parquet")
+                # 2. Imprimimos cuántos posts hay realmente
+                print(f"Total de posts guardados: {len(df_x)}\n")
+
+                # 3. Mostramos el texto de todos los posts para que los leas
+                for index, fila in df_x.iterrows():
+                    print(f"Post {index + 1}:")
+                    print(f"Autor: {fila['autor']}")
+                    print(f"Texto: {fila['texto']}")
+                    print("-" * 50)
                 
         # === AQUI ESTÁ EL CAMBIO: Agrupamos 401, 403 y 429 ===
         elif estado in [401, 403, 429]:
@@ -108,8 +119,8 @@ def main():
     else:
         print("Aviso: No se ingresó URI. Se omite el guardado en MongoDB.") #[cite: 1]   
     
-        print("\n=== PIPELINE COMPLETADO CON ÉXITO ===")
-        print(df_corpus.head())
+    print("\n=== PIPELINE COMPLETADO CON ÉXITO ===")
+    print(df_corpus.head())
 
 if __name__ == "__main__":
     main()

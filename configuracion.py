@@ -1,6 +1,6 @@
 #Parámetros X
 X_QUERY = "universidad OR educacion OR tecnologia lang:es -is:retweet"
-X_MAX_RESULTS = 0
+X_MAX_RESULTS = 800
 
 #RSS Parámetros
 COOPERATIVA_RSS_URL = "https://www.cooperativa.cl/noticias/site/tax/port/all/rss_3___1.xml"
