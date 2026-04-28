@@ -19,7 +19,6 @@ mock_data = [
 # Crear el DataFrame
 df_mock = pd.DataFrame(mock_data)
 
-# Exportar a CSV simulando el archivo que entregará el Integrante 1
 df_mock.to_csv("mock_corpus.csv", index=False, encoding="utf-8")
 
 print("Archivo 'mock_corpus.csv' generado con éxito. Listo para Ingeniería de Datos y Machine Learning.")

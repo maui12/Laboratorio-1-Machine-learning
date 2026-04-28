@@ -8,24 +8,21 @@ def extraer_rss_cooperativa():
     Lee el feed RSS de Cooperativa y devuelve un DataFrame con la estructura homogénea del corpus.
     """
     
-    # feedparser descarga y estructura el XML automaicamente
+    
     try:
         feed = feedparser.parse(COOPERATIVA_RSS_URL)
     except Exception as e:
         print(f"Error al conectar con el RSS: {e}")
-        #retorna un DataFrame vacio con la estructura correcta para no romper la consolidación
+       
         return pd.DataFrame(columns=["id", "fuente", "texto", "fecha", "url", "autor", "consulta"])
 
     registros = []
     
-    # Extraemos solo hasta el límite definido en la configuración
     for entry in feed.entries[:COOPERATIVA_MAX_ITEMS]:
         
-        # Para Machine Learning, unimos título y resumen para tener más texto para analizar
         titulo = entry.get("title", "")
         resumen = entry.get("summary", "")
         
-        # Limpiamos espacios extra en caso de que alguno venga vacío
         texto_completo = f"{titulo} - {resumen}".strip()
         if texto_completo == "-":
             texto_completo = "Sin texto"

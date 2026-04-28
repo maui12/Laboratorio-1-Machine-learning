@@ -17,7 +17,6 @@ def buscar_posts_x(query, bearer_token, max_results=800):
     print(f"-> Iniciando descarga definitiva. Meta: {max_results} posts...")
 
     while len(registros) < max_results:
-        # Calculamos cuántos faltan para no pedir de más
         faltantes = max_results - len(registros)
         cantidad_peticion = max(10, min(faltantes, 100))
         
@@ -29,7 +28,6 @@ def buscar_posts_x(query, bearer_token, max_results=800):
             "user.fields": "username,name"
         }
         
-        # Si hay un token de paginación, lo agregamos para pedir la siguiente "página"
         if next_token:
             params["next_token"] = next_token
 
@@ -39,7 +37,6 @@ def buscar_posts_x(query, bearer_token, max_results=800):
             return 500, pd.DataFrame(columns=columnas_base)
 
         if response.status_code != 200:
-            # Si falla a la mitad del proceso, devolvemos lo que hayamos logrado recolectar
             if len(registros) > 0:
                 print(f"-> AVISO: La API se detuvo por error {response.status_code}. Devolviendo {len(registros)} posts recolectados.")
                 return 200, pd.DataFrame(registros)
@@ -67,16 +64,13 @@ def buscar_posts_x(query, bearer_token, max_results=800):
             
         print(f"   ... Descargados {len(registros)} de {max_results}")
 
-        # Revisamos si la API nos indica que hay más páginas
         meta = data.get("meta", {})
         next_token = meta.get("next_token")
         
-        # Si ya no hay más resultados en todo X para esta consulta, terminamos
         if not next_token:
             print("   ... No hay más resultados recientes en X para esta consulta.")
             break
             
-        # Pausa de 1.5 segundos para no saturar los límites de velocidad de X
         time.sleep(1.5)
 
     return 200, pd.DataFrame(registros)

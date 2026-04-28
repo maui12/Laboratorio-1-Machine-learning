@@ -26,7 +26,7 @@ def main():
     
     columnas_vacias = ["id", "fuente", "texto", "fecha", "url", "autor", "consulta"]
 
-    # 2. Lógica de validación
+
     if token_ingresado.strip() != "":
         print("-> Evaluando token y consultando API...")
         
@@ -43,17 +43,14 @@ def main():
                 print("-> Respaldo local ('respaldo_x_crudo.parquet') actualizado.")
 
                 df_x = pd.read_parquet("respaldo_x_crudo.parquet")
-                # 2. Imprimimos cuántos posts hay realmente
                 print(f"Total de posts guardados: {len(df_x)}\n")
 
-                # 3. Mostramos el texto de todos los posts para que los leas
                 for index, fila in df_x.iterrows():
                     print(f"Post {index + 1}:")
                     print(f"Autor: {fila['autor']}")
                     print(f"Texto: {fila['texto']}")
                     print("-" * 50)
                 
-        # === AQUI ESTÁ EL CAMBIO: Agrupamos 401, 403 y 429 ===
         elif estado in [401, 403, 429]:
             if estado == 401:
                 print("-> ERROR: El token introducido NO es válido (Error 401).")
@@ -67,7 +64,6 @@ def main():
             except FileNotFoundError:
                 print("-> AVISO: No se encontró el archivo Parquet. Se usará un DataFrame vacío.")
                 df_x = pd.DataFrame(columns=columnas_vacias)
-        # =======================================================
                 
         else:
             print(f"-> Error inesperado de la API (Código {estado}). Siguiendo con DataFrame vacío.")
@@ -107,7 +103,7 @@ def main():
  
     print("\n[7/7] Sincronizando con MongoDB...")
 
-    mongodb_uri = getpass("Ingresa tu URI de MongoDB (o presiona Enter para omitir): ") #[cite: 1]
+    mongodb_uri = getpass("Ingresa tu URI de MongoDB (o presiona Enter para omitir): ") 
 
     if mongodb_uri:
         persistencia_nosql.guardar_en_mongodb(
@@ -115,9 +111,9 @@ def main():
             mongodb_uri, 
             MONGO_DB_NAME, 
             MONGO_COLLECTION_NAME
-        ) #[cite: 1]
+        ) 
     else:
-        print("Aviso: No se ingresó URI. Se omite el guardado en MongoDB.") #[cite: 1]   
+        print("Aviso: No se ingresó URI. Se omite el guardado en MongoDB.")  
     
     print("\n=== PIPELINE COMPLETADO CON ÉXITO ===")
     print(df_corpus.head())
